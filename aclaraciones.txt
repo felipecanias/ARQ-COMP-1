@@ -1,0 +1,2 @@
+Comando para compilar con libreria ncurses:
+gcc password.c -o password -lpdcurses

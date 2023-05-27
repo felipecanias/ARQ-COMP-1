@@ -1,6 +1,4 @@
-#include <conio.h>
 #include <stdio.h>
-
 //
 void disp_binary(int);
 void delay(int);
@@ -24,10 +22,12 @@ int main() {
       disp_binary(output);
       delay(on_time);
     }
-  } while (!kbhit()); /* Repeat loop until the keyboard is hit */
+  } while (1); // Modificar condicion
   output = 0x00;
   disp_binary(output);
   printf("chau... !\n");
+
+  return 0;
 }
 void delay(int time) {
   int i;
@@ -44,6 +44,4 @@ void disp_binary(int i) {
     else
       printf("0 ");
   printf("\n");
-
-  return 0;
 }
