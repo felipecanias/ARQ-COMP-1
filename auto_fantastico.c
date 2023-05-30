@@ -6,7 +6,7 @@ void delay(int);
 int main() {
   unsigned char output;
   char t;
-  int on_time = 10000; /* set holding time */
+  int on_time = 10000;  //set holding time
   printf("secuencia en acción ... Oprima una tecla para finalizar\n");
   do {
     output = 0x80;

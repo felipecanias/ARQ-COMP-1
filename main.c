@@ -1,5 +1,6 @@
-#include <ncurses/ncurses.h>
+#include <ncurses.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 void disp_binary(int);
 void delay(int);
@@ -93,7 +94,7 @@ int main() {
   input_menu = getchar();
   menu = input_menu - '0';
 
-  system("cls");
+  system("clear");
 
   switch (menu) {
   case 1:
