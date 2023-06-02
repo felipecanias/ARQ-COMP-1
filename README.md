@@ -10,5 +10,5 @@ Integrantes:
 
 Comando para compilar con la librería ncurses:
 ```bash
-gcc password.c -o password -lpdcurses
+gcc main.c -o main -lndcurses
 ```  

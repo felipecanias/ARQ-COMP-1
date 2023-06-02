@@ -1,38 +1,42 @@
-#include <stdio.h>
+#include <ncurses.h>
+#include "leds.c"
 
-int main() {
-  int menu;
+void menu() {
+    int opcion;
 
-  printf("---Menu---\n");
-  printf("1) Caso 1\n");
-  printf("2) Caso 2\n");
-  printf("3) Caso 3\n");
-  printf("4) Caso 4\n");
-  printf("5) Exit\n\n");
+    while (1) {
+        printw("---Menu---\n");
+        printw("1) Auto Fantastico\n");
+        printw("2) El Choque\n");
+        printw("3) La Carrera\n");
+        printw("4) Caso 4\n");
+        printw("5) Caso 5\n");
+        printw("6) Exit\n\n");
 
-  printf("Seleccione una opción: ");
-  scanf("%d", &menu);
+        printw("Seleccione una opción: ");
+        opcion = getch() - '0';
+        clear();
 
-  switch (menu) {
-    case 1:
-        printf("\nMenu 1\n");
-        break;
-    case 2:
-        printf("\nMenu 2\n");
-        break;
-    case 3:
-        printf("\nMenu 3\n");
-        break;
-    case 4:
-        printf("\nMenu 4\n");
-        break;
-    case 5:
-        printf("\nExit\n");
-        break;
-    default:
-        printf("\nOpción inválida\n");
-        break;
-  }
-
-  return 0;
+        switch (opcion) {
+            case 1:
+                auto_fantastico();
+                break;
+            case 2:
+                printw("\nMenu 2\n");
+                break;
+            case 3:
+                printw("\nMenu 3\n");
+                break;
+            case 4:
+                printw("\nMenu 4\n");
+                break;
+            case 5:
+                printw("\nExit\n");
+                return;
+            default:
+                printw("\nOpción inválida\n");
+                break;
+        }
+        clear();
+    }
 }

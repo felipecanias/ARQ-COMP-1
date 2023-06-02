@@ -3,7 +3,7 @@
 void disp_binary(int);
 void delay(int);
 //
-int main() {
+int auto_fantastico() {
   unsigned char output;
   char t;
   int on_time = 10000;  //set holding time
