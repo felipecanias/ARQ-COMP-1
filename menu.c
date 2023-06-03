@@ -3,6 +3,7 @@
 
 void menu() {
     int opcion;
+    int delays[] = {10000, 10000, 10000, 10000, 10000};
 
     while (1) {
         printw("---Menu---\n");
@@ -19,18 +20,21 @@ void menu() {
 
         switch (opcion) {
             case 1:
-                auto_fantastico();
+                auto_fantastico(&delays[0]);
                 break;
             case 2:
-                printw("\nMenu 2\n");
+                choque(&delays[1]);
                 break;
             case 3:
-                printw("\nMenu 3\n");
+                carrera(&delays[2]);
                 break;
             case 4:
                 printw("\nMenu 4\n");
                 break;
             case 5:
+                printw("\nMenu 4\n");
+                break;
+            case 6:
                 printw("\nExit\n");
                 return;
             default:

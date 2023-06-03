@@ -6,7 +6,7 @@ int main() {
     cbreak(); // Desactivar el búfer de línea (lectura de caracteres uno por uno)
     noecho(); // No mostrar los caracteres ingresados
     getch();
-    if (login()) menu(); //Intentamos el logeo
+    /*if (login())*/ menu(); //Intentamos el logeo
 
     endwin(); // Finalizar la biblioteca ncurses
     return 0;
