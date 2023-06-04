@@ -3,16 +3,21 @@
 
 void menu() {
     int opcion;
-    int delays[] = {10000, 10000, 10000, 10000, 10000};
+    int delays[] = {3000, 3000, 3000, 3000, 3000, 2000};
+
 
     while (1) {
         printw("---Menu---\n");
         printw("1) Auto Fantastico\n");
         printw("2) El Choque\n");
         printw("3) La Carrera\n");
-        printw("4) Caso 4\n");
-        printw("5) Caso 5\n");
-        printw("6) Exit\n\n");
+        printw("4) Parpadeo Estelar\n");
+        printw("5) Ella se fue con otro :(\n");
+        printw("6) Fuegos Artificiales\n");
+        init_pair(2, COLOR_RED, COLOR_BLACK);
+        attron(COLOR_PAIR(2));
+        printw("7) Exit\n\n");
+        attroff(COLOR_PAIR(2));
 
         printw("Seleccione una opción: ");
         opcion = getch() - '0';
@@ -29,12 +34,15 @@ void menu() {
                 carrera(&delays[2]);
                 break;
             case 4:
-                printw("\nMenu 4\n");
+                parpadeo_estelar(&delays[3]);
                 break;
             case 5:
-                printw("\nMenu 4\n");
+                otro(&delays[4]);
                 break;
             case 6:
+                fuegos_artificiales(&delays[5]);
+                return;
+            case 7:
                 printw("\nExit\n");
                 return;
             default:
