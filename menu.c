@@ -1,5 +1,6 @@
 #include <ncurses.h>
 #include "leds.c"
+#define port_out 0x208
 
 void menu() {
     int opcion;
@@ -7,6 +8,9 @@ void menu() {
 
 
     while (1) {
+        //output = 0x00;
+        //outportb (port_out,~output);
+
         printw("---Menu---\n");
         printw("1) Auto Fantastico\n");
         printw("2) El Choque\n");
@@ -41,7 +45,7 @@ void menu() {
                 break;
             case 6:
                 fuegos_artificiales(&delays[5]);
-                return;
+                break;
             case 7:
                 printw("\nExit\n");
                 return;
