@@ -1,38 +1,58 @@
-#include <stdio.h>
+#include <ncurses.h>
+#include "leds.c"
+#define port_out 0x208
 
-int main() {
-  int menu;
+void menu() {
+    int opcion;
+    int delays[] = {3000, 3000, 3000, 3000, 3000, 2000};
 
-  printf("---Menu---\n");
-  printf("1) Caso 1\n");
-  printf("2) Caso 2\n");
-  printf("3) Caso 3\n");
-  printf("4) Caso 4\n");
-  printf("5) Exit\n\n");
 
-  printf("Seleccione una opción: ");
-  scanf("%d", &menu);
+    while (1) {
+        //output = 0x00;
+        //outportb (port_out,~output);
 
-  switch (menu) {
-    case 1:
-        printf("\nMenu 1\n");
-        break;
-    case 2:
-        printf("\nMenu 2\n");
-        break;
-    case 3:
-        printf("\nMenu 3\n");
-        break;
-    case 4:
-        printf("\nMenu 4\n");
-        break;
-    case 5:
-        printf("\nExit\n");
-        break;
-    default:
-        printf("\nOpción inválida\n");
-        break;
-  }
+        printw("---Menu---\n");
+        printw("1) Auto Fantastico\n");
+        printw("2) El Choque\n");
+        printw("3) La Carrera\n");
+        printw("4) Parpadeo Estelar\n");
+        printw("5) Ella se fue con otro :(\n");
+        printw("6) Fuegos Artificiales\n");
+        init_pair(2, COLOR_RED, COLOR_BLACK);
+        attron(COLOR_PAIR(2));
+        printw("7) Exit\n\n");
+        attroff(COLOR_PAIR(2));
 
-  return 0;
+        printw("Seleccione una opción: ");
+        opcion = getch() - '0';
+        clear();
+
+        switch (opcion) {
+            case 1:
+                auto_fantastico(&delays[0]);
+                break;
+            case 2:
+                choque(&delays[1]);
+                break;
+            case 3:
+                carrera(&delays[2]);
+                break;
+            case 4:
+                parpadeo_estelar(&delays[3]);
+                break;
+            case 5:
+                otro(&delays[4]);
+                break;
+            case 6:
+                fuegos_artificiales(&delays[5]);
+                break;
+            case 7:
+                printw("\nExit\n");
+                return;
+            default:
+                printw("\nOpción inválida\n");
+                break;
+        }
+        clear();
+    }
 }
