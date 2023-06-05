@@ -8,12 +8,27 @@ void delay(int *d) {
     for (i = time; i > 0; --i) /* repeat specified number of times */
         for (j = 0; j < 65535; ++j);
 }
+/*
+void outportb(int data) {
+    clear();
+    int led[] = {24,28,39};
+    int i =0;
+    for (int mask = 128; mask > 0; mask = mask / 2) {
+        if (data & mask) {
+            digitalWrite(led[i], 1);
+        } else {
+            digitalWrite(led[i], 0);
+        }
+        i++;
+    }
+    refresh();
+}
+ */
 
 void disp_binary(int data, char *name, int *d) {
     clear();
     printw("Secuencia: %s\n\n", name);
     init_pair(2, COLOR_RED, COLOR_BLACK);
-
     for (int mask = 128; mask > 0; mask = mask / 2) {
         if (data & mask) {
             attron(COLOR_PAIR(2));
@@ -61,7 +76,7 @@ int auto_fantastico(int *delayValue) {
         output = 0x80;
         for (t = 0; t < 8; t++) {
             //on_time = inportb (port_in); /* Read from DIP switches */
-            //outportb (port_out,~output); /* Turn LEDs on */
+            //outportb (output); /* Turn LEDs on */
             disp_binary(output, "Auto Fantastico", delayValue);
             if (!checkKey(delayValue)) return 1;
             delay(delayValue);
