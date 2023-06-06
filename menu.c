@@ -2,8 +2,8 @@
 #include "leds.c"
 #define port_out 0x208
 
-extern void choque_asm();
-extern void parpadeo_estelar_asm();
+//extern void otro_asm();
+//extern void parpadeo_estelar_asm();
 
 void menu() {
     int opcion;
@@ -11,8 +11,8 @@ void menu() {
 
 
     while (1) {
-        //output = 0x00;
-        //outportb (port_out,~output);
+        uint8_t output = 0x00;
+        outportb (output);
 
         printw("---Menu---\n");
         printw("1) Auto Fantastico\n");
@@ -35,13 +35,13 @@ void menu() {
                 auto_fantastico(&delays[0]);
                 break;
             case 2:
-                choque_asm();
+                choque(&delays[1]);
                 break;
             case 3:
                 carrera(&delays[2]);
                 break;
             case 4:
-                parpadeo_estelar_asm();
+                parpadeo_estelar(&delays[3]);
                 break;
             case 5:
                 otro(&delays[4]);
