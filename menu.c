@@ -2,6 +2,9 @@
 #include "leds.c"
 #define port_out 0x208
 
+extern void choque_asm();
+extern void parpadeo_estelar_asm();
+
 void menu() {
     int opcion;
     int delays[] = {3000, 3000, 3000, 3000, 3000, 2000};
@@ -32,13 +35,13 @@ void menu() {
                 auto_fantastico(&delays[0]);
                 break;
             case 2:
-                choque(&delays[1]);
+                choque_asm();
                 break;
             case 3:
                 carrera(&delays[2]);
                 break;
             case 4:
-                parpadeo_estelar(&delays[3]);
+                parpadeo_estelar_asm();
                 break;
             case 5:
                 otro(&delays[4]);

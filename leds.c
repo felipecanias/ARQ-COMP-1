@@ -1,6 +1,14 @@
 #include <stdio.h>
 #define port_out 0x208
 
+void delay_asm() {
+    int i;
+    int time = 3000;
+    unsigned int j;
+    for (i = time; i > 0; --i) /* repeat specified number of times */
+        for (j = 0; j < 65535; ++j);
+}
+
 void delay(int *d) {
     int i;
     int time = *d;
@@ -24,6 +32,23 @@ void outportb(int data) {
     refresh();
 }
  */
+
+void disp_binary_asm(int data) {
+    clear();
+    printw("\n");
+    init_pair(2, COLOR_RED, COLOR_BLACK);
+    for (int mask = 128; mask > 0; mask = mask / 2) {
+        if (data & mask) {
+            attron(COLOR_PAIR(2));
+            addch('*');
+            attroff(COLOR_PAIR(2));
+        } else {
+            addch('_');
+        }
+    }
+    printw("\n\nPresione ESC o q para salir\n");
+    refresh();
+}
 
 void disp_binary(int data, char *name, int *d) {
     clear();
