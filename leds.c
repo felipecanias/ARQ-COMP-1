@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include "EasyPIO.h"
-
 /*
 void delay_asm() {
     int i;
@@ -95,19 +94,19 @@ int checkKey(int *delayValue) {
     return 1; // No se ha presionado la tecla de salida
 }
 
-//
+
 int auto_fantastico(int *delayValue) {
     unsigned char output;
     char t;
     do {
         output = 0x80;
         for (t = 0; t < 8; t++) {
-            //on_time = inportb (port_in); /* Read from DIP switches */
+            //on_time = inportb (port_in);
             outportb (output);
             disp_binary(output, "Auto Fantastico", delayValue);
             if (!checkKey(delayValue)) return 1;
             delay(delayValue);
-            output = output >> 1; /* Shift bits to lower positions */
+            output = output >> 1;
         }
         output = 0x01;
         for (t = 0; t < 6; t++) {
@@ -118,7 +117,7 @@ int auto_fantastico(int *delayValue) {
             if (!checkKey(delayValue)) return 1;
             delay(delayValue);
         }
-    } while (1); /* Repeat loop until the keyboard is hit */
+    } while (1);
 
 }
 

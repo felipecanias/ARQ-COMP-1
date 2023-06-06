@@ -1,6 +1,6 @@
 #include <ncurses.h>
 #include "leds.c"
-#define port_out 0x208
+#include "EasyPIO.h"
 
 //extern void otro_asm();
 //extern void parpadeo_estelar_asm();
@@ -9,6 +9,7 @@ void menu() {
     int opcion;
     int delays[] = {3000, 3000, 3000, 3000, 3000, 2000};
 
+    pioInit();
 
     while (1) {
         uint8_t output = 0x00;
@@ -31,12 +32,15 @@ void menu() {
         clear();
 
         switch (opcion) {
+
             case 1:
                 auto_fantastico(&delays[0]);
                 break;
+
             case 2:
                 choque(&delays[1]);
                 break;
+
             case 3:
                 carrera(&delays[2]);
                 break;
