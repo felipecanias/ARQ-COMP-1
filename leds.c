@@ -50,9 +50,11 @@ int checkKey(int *delayValue) {
                 return 0; // Tecla de salida presionada
             case KEY_UP:
                 *delayValue += 10; // Aumentar el retardo
+                if (*delayValue>=100) *delayValue=100;
                 break;
             case KEY_DOWN:
                 *delayValue -= 10; // Reducir el retardo
+                if (*delayValue<=0) *delayValue=10;
                 break;
             default:
                 break;
