@@ -3,21 +3,29 @@
 
 .global otro_asm
 otro_asm:
-      PUSH {R4, R5, LR}
-      MOV R4, #7
-      LDR R5, =array
+      PUSH {R4, R5, R6, R7, LR}     //Guardo en pila por ser subrutina
+      MOV R4, #0                //Contador
+      LDR R5, =array            //Cargo el Array
+      MOV R6, R0                //Guardo el delay en R6
 
 loop:
-    LDRB R0, [R5], #1
-    BL disp_binary_asm
+    LDRB R0, [R5, R4]
+    LDR R1, =name
+    MOV R2, R6
+    BL disp_binary
     
-    
-    BL delay_asm
+    MOV R0, R6
+    BL delay
+    CMP R0, #0
+    POPEQ {R4, R5, R6, R7, PC}
 
-    SUBS R4, R4, #1
+    ADD R4, R4, #1
+    CMP R4, #14
     BNE loop
+    MOVEQ R4, #0
+    B loop
 
-    POP {R4, R5, PC}
+
 
 .data
 array:
@@ -36,4 +44,8 @@ array:
        .byte 0x80
        .byte 0x00
 
+name:
+	.asciz "Ella se fue con otro"
+
 .end
+
