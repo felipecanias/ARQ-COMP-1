@@ -1,22 +1,22 @@
 #include <ncurses.h>
 #include "leds.c"
-//#include "EasyPIO.h"
+#include "EasyPIO.h"
 
 extern void otro_asm();
 extern void parpadeo_estelar_asm();
 
 void menu() {
-//    pioInit();
-//    char led[] = {14, 15, 18, 23, 24, 25, 8,7};
-//    for (int i=0; i<=7;i++){
-//        pinMode(led[i],OUTPUT);
-//    }
+    pioInit();
+    char led[] = {14, 15, 18, 23, 24, 25, 8,7};
+    for (int i=0; i<=7;i++){
+        pinMode(led[i],OUTPUT);
+    }
 
     int opcion;
     int delays[] = {50, 50, 50, 50, 50};
     while (1) {
-//        uint8_t output = 0x00;
-//        outportb (output);
+        uint8_t output = 0x00;
+        outportb (output);
 
         printw("---Menu---\n");
         printw("1) Auto Fantastico\n");
@@ -66,75 +66,3 @@ void menu() {
         clear();
     }
 }
-
-/*
-loop2:
-    MOV R4, #0x01
-    MOV R5, #1
-
-    CMP R5, #0
-    BEQ display_none
-    BNE display
-    LSLNE R4, R4, #1
-
-    CMP R4, #0
-    BEQ loop
-
-    MOV R0, R6
-    BL delay
-    CMP R0, #0
-    POPEQ {R4, R5, R6, R7, PC}
-
-    B loop2
- */
-
-/*
-
-.text
-
-.global parpadeo_estelar_asm
-
-display:
-    MOV R0, R4
-    LDR R1, =name
-    MOV R2, R6
-    BL disp_binary
-
-display_none:
-    MOV R0, #0
-    LDR R1, =name
-    MOV R2, R6
-    BL disp_binary
-
-
-parpadeo_estelar_asm:
-      PUSH {R4, R5, R6, LR}     //Guardo en pila por ser subrutina
-      MOV R6, R0                //Guardo el delay en R6
-
-loop:
-    MOV R4, #0x80
-    MOV R5, #1
-
-    CMP R5, #0
-    BEQ display_none
-    MOVEQ R5, #1
-    BNE display
-    MOVNE R5, #0
-    LSRNE R4, R4, #1
-
-    MOV R0, R6
-    BL delay
-    CMP R0, #0
-    POPEQ {R4, R5, R6, PC}
-
-    B loop
-
-
-.data
-name:
-	.asciz "Parpadeo Estelar2"
-
-.end
-
-
- */

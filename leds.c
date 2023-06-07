@@ -1,7 +1,7 @@
 #include <stdio.h>
-//#include "EasyPIO.h"
+#include "EasyPIO.h"
 
-/*
+
 void outportb(int data) {
     clear();
     char led[] = {14, 15, 18, 23, 24, 25, 8,7};
@@ -16,10 +16,11 @@ void outportb(int data) {
     }
     refresh();
 }
- */
+
 
 void disp_binary(int data, char *name, int *d) {
     clear();
+    outportb(data);
     printw("Secuencia: %s\n\n", name);
     init_pair(2, COLOR_RED, COLOR_BLACK);
     for (int mask = 128; mask > 0; mask = mask / 2) {
@@ -78,7 +79,6 @@ int auto_fantastico(int *delayValue) {
     do {
         output = 0x80;
         for (t = 0; t < 8; t++) {
-            //outportb (output);
             disp_binary(output, "Auto Fantastico", delayValue);
             if (!delay(delayValue)) return 1;
             output = output >> 1;
@@ -86,7 +86,6 @@ int auto_fantastico(int *delayValue) {
         output = 0x01;
         for (t = 0; t < 6; t++) {
             output = output << 1;
-            //outportb (output);
             disp_binary(output, "Auto Fantastico", delayValue);
             if (!delay(delayValue)) return 1;
         }
@@ -103,7 +102,6 @@ int choque(int *delayValue) {
     while (1) {
         for (int i = 0; i < table_size; ++i) {
             disp_binary(table[i], "Choque", delayValue);
-            //outportb (table[i]);
             if (!delay(delayValue)) return 1;
         }
     }
@@ -121,7 +119,6 @@ int carrera(int *delayValue) {
     while (1) {
         for (int i = 0; i < table_size; ++i) {
             disp_binary(table[i], "La Carrera", delayValue);
-            //outportb (table[i]);
             if (!delay(delayValue)) return 1;
         }
     }
@@ -150,7 +147,6 @@ int otro(int *delayValue) {
     while (1) {
         for (int i = 0; i < table_size; ++i) {
             disp_binary(table[i], "Ella se fue con otro", delayValue);
-            //outportb (table[i]);
             if (!delay(delayValue)) return 1;
         }
     }
@@ -167,12 +163,10 @@ int parpadeo_estelar(int *delayValue) {
         for (t = 0; t < 14; t++) {
             if(mostrar){
                 disp_binary(output, "Parpadeo Estelar", delayValue);
-                //outportb (output);
                 output = output >> 1;
                 mostrar=false;
             } else{
                 disp_binary(vacio, "Parpadeo Estelar", delayValue);
-                //outportb (output);
                 mostrar=true;
             }
             if (!delay(delayValue)) return 1;
@@ -182,12 +176,10 @@ int parpadeo_estelar(int *delayValue) {
         for (t = 0; t < 14; t++) {
             if(mostrar){
                 disp_binary(output, "Parpadeo Estelar", delayValue);
-                //outportb (output);
                 output = output << 1;
                 mostrar=false;
             } else{
                 disp_binary(vacio, "Parpadeo Estelar", delayValue);
-                //outportb (output);
                 mostrar=true;
             }
             if (!delay(delayValue)) return 1;
@@ -210,7 +202,6 @@ int fuegos_artificiales(int *delayValue) {
     while (1) {
         for (int i = 0; i < table_size; ++i) {
             disp_binary(table[i], "Fuegos Artificiales", delayValue);
-            //outportb (table[i]);
             if (!delay(delayValue)) return 1;
         }
     }
