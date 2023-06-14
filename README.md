@@ -8,9 +8,9 @@ Integrantes:
 
 ## Aclaraciones
 
-Comando para compilar con la librería ncurses:
+Comando para compilar con la librería ncurses y curl:
 ```bash
-gcc main.c -o main -lndcurses
+gcc main.c http.c include/cJSON.c -o main -lncurses -lcurl
 ```  
 
 Emular Raspberry
