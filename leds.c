@@ -1,8 +1,10 @@
 #include <stdio.h>
 #include <string.h>
 #include "http.h"
-
+#include "include/bot_credentials.h"
 // #include "include/EasyPIO.h"
+int offset = 0;
+
 
 // void outportb(int data) {
 //     clear();
@@ -18,7 +20,15 @@
 //     }
 //     refresh();
 // }
-int offset = 0;
+
+void initial_msg(char *name) {
+    char message[256];
+    sprintf(message, "---%s---\n\"up\" o \"down\" para aumentar o disminuir la velocidad\n\"q\" para salir", name);
+    sendMessage(BOT_TOKEN, CHAT_ID, message);
+    struct http_return init = readLastMessage(BOT_TOKEN, 0);
+    //offset = init.update_id + 1;
+}
+
 
 void disp_binary(int data, char *name, int *d)
 {
@@ -43,41 +53,9 @@ void disp_binary(int data, char *name, int *d)
     refresh();
 }
 
-// int checkKey(int *delayValue)
-// {
-//     raw(); // Configurar modo raw
-//     keypad(stdscr, TRUE);
-//     nodelay(stdscr, TRUE); // Activar modo no bloqueante para getch()
-//     int ch = getch();
-//     if (ch != ERR)
-//     {
-//         switch (ch)
-//         {
-//         case 27: // Escape
-//         case 'q':
-//             nodelay(stdscr, FALSE); // Restaurar modo bloqueante para getch()
-//             return 0;               // Tecla de salida presionada
-//         case KEY_UP:
-//             *delayValue += 10; // Aumentar el retardo
-//             if (*delayValue >= 100)
-//                 *delayValue = 100;
-//             break;
-//         case KEY_DOWN:
-//             *delayValue -= 10; // Reducir el retardo
-//             if (*delayValue <= 0)
-//                 *delayValue = 10;
-//             break;
-//         default:
-//             break;
-//         }
-//     }
-//     nodelay(stdscr, FALSE); // Restaurar modo bloqueante para getch()
-//     return 1;               // No se ha presionado la tecla de salida
-// }
-
 int checkMessage(int *delayValue)
 {
-    http_return telegram_option = readLastMessage("6156973481:AAHXgfu9nLrmqucDXTX3GXREczhjTqFVY64", offset);
+    http_return telegram_option = readLastMessage(BOT_TOKEN, offset);
     if (telegram_option.update_id != 0)
     {
         offset = telegram_option.update_id + 1;
@@ -118,25 +96,18 @@ int delay(int *d)
         return 0;
     int i;
     int time = *d;
-
-    time = time * 300;
-    unsigned int j;
+    time = time * 5000;
     for (i = time; i > 0; --i)
-    {
-        // if (!checkKey(d))
-        // return 0;
-    }
     
     return 1;
 }
 
 int auto_fantastico(int *delayValue)
 {
+    initial_msg("Auto Fantastico");
+
     unsigned char output;
     char t;
-    sendMessage("6156973481:AAHXgfu9nLrmqucDXTX3GXREczhjTqFVY64", "6022803879", "---Auto Fantastico---\n\"up\" o \"down\" para aumentar o disminuir la velocidad\n\"q\" para salir");
-    struct http_return init = readLastMessage("6156973481:AAHXgfu9nLrmqucDXTX3GXREczhjTqFVY64", 0);
-    offset = init.update_id + 1;
     do
     {
         output = 0x80;
@@ -161,12 +132,12 @@ int auto_fantastico(int *delayValue)
 
 int choque(int *delayValue)
 {
+    initial_msg("Choque");
+
     uint8_t table[] = {
         0x81, 0x42, 0x24, 0x18,
         0x18, 0x24, 0x42};
     int table_size = sizeof(table) / sizeof(table[0]);
-    sendMessage("6156973481:AAHXgfu9nLrmqucDXTX3GXREczhjTqFVY64", "6022803879", "---El Choque---\n\"up\" o \"down\" para aumentar o disminuir la velocidad\n\"q\" para salir");
-    struct http_return init = readLastMessage("6156973481:AAHXgfu9nLrmqucDXTX3GXREczhjTqFVY64", 0);
     while (1)
     {
         for (int i = 0; i < table_size; ++i)
@@ -180,6 +151,8 @@ int choque(int *delayValue)
 
 int carrera(int *delayValue)
 {
+    initial_msg("La Carrera");
+
     uint8_t table[] = {
         0x01, 0x01, 0x02, 0x02,
         0x04, 0x04, 0x08, 0x08,
@@ -187,8 +160,7 @@ int carrera(int *delayValue)
         0x50, 0x60, 0xC0, 0x80};
 
     int table_size = sizeof(table) / sizeof(table[0]);
-    sendMessage("6156973481:AAHXgfu9nLrmqucDXTX3GXREczhjTqFVY64", "6022803879", "---La Carrera---\n\"up\" o \"down\" para aumentar o disminuir la velocidad\n\"q\" para salir");
-    struct http_return init = readLastMessage("6156973481:AAHXgfu9nLrmqucDXTX3GXREczhjTqFVY64", 0);
+    
     while (1)
     {
         for (int i = 0; i < table_size; ++i)
@@ -202,6 +174,8 @@ int carrera(int *delayValue)
 
 int otro(int *delayValue)
 {
+    initial_msg("Ella se fue con otro");
+
     uint8_t table[] = {
         0x00,
         0x80,
@@ -219,8 +193,6 @@ int otro(int *delayValue)
         0x00};
 
     int table_size = sizeof(table) / sizeof(table[0]);
-    sendMessage("6156973481:AAHXgfu9nLrmqucDXTX3GXREczhjTqFVY64", "6022803879", "---Ella se fue con otro---\n\"up\" o \"down\" para aumentar o disminuir la velocidad\n\"q\" para salir");
-    struct http_return init = readLastMessage("6156973481:AAHXgfu9nLrmqucDXTX3GXREczhjTqFVY64", 0);
     while (1)
     {
         for (int i = 0; i < table_size; ++i)
@@ -234,13 +206,12 @@ int otro(int *delayValue)
 
 int parpadeo_estelar(int *delayValue)
 {
+    initial_msg("Parpadeo Estelar");
 
     unsigned char output;
     char t;
     bool mostrar = true;
     unsigned char vacio = 0x00;
-    sendMessage("6156973481:AAHXgfu9nLrmqucDXTX3GXREczhjTqFVY64", "6022803879", "---Parpadeo Estelar---\n\"up\" o \"down\" para aumentar o disminuir la velocidad\n\"q\" para salir");
-    struct http_return init = readLastMessage("6156973481:AAHXgfu9nLrmqucDXTX3GXREczhjTqFVY64", 0);
     while (1)
     {
         output = 0x80;
@@ -281,25 +252,34 @@ int parpadeo_estelar(int *delayValue)
     }
 }
 
-int fuegos_artificiales(int *delayValue)
-{
-    uint8_t table[] = {
-        0x00, 0x10, 0x38, 0x7C, 0xEE, 0xC7, 0x83,
-        0x01, 0x40, 0xE0, 0xF0, 0xF8, 0xBC, 0x1E, 0x0F,
-        0x07, 0x03, 0x02, 0x07, 0x0F, 0x1F,
-        0x3D, 0x78, 0xF0, 0xE0, 0xC4, 0x8E, 0x1F, 0x3F,
-        0x7B, 0xF1, 0xE0, 0xC0, 0x80
-
-    };
-
-    int table_size = sizeof(table) / sizeof(table[0]);
-    while (1)
-    {
-        for (int i = 0; i < table_size; ++i)
-        {
-            disp_binary(table[i], "Fuegos Artificiales", delayValue);
-            if (!delay(delayValue))
-                return 1;
-        }
-    }
-}
+// int checkKey(int *delayValue)
+// {
+//     raw(); // Configurar modo raw
+//     keypad(stdscr, TRUE);
+//     nodelay(stdscr, TRUE); // Activar modo no bloqueante para getch()
+//     int ch = getch();
+//     if (ch != ERR)
+//     {
+//         switch (ch)
+//         {
+//         case 27: // Escape
+//         case 'q':
+//             nodelay(stdscr, FALSE); // Restaurar modo bloqueante para getch()
+//             return 0;               // Tecla de salida presionada
+//         case KEY_UP:
+//             *delayValue += 10; // Aumentar el retardo
+//             if (*delayValue >= 100)
+//                 *delayValue = 100;
+//             break;
+//         case KEY_DOWN:
+//             *delayValue -= 10; // Reducir el retardo
+//             if (*delayValue <= 0)
+//                 *delayValue = 10;
+//             break;
+//         default:
+//             break;
+//         }
+//     }
+//     nodelay(stdscr, FALSE); // Restaurar modo bloqueante para getch()
+//     return 1;               // No se ha presionado la tecla de salida
+// }

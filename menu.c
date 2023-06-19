@@ -2,11 +2,11 @@
 #include <ncurses.h>
 #include "leds.c"
 #include "http.h"
+#include "include/bot_credentials.h"
 // #include "include/EasyPIO.h"
 
 // extern void otro_asm();
 // extern void parpadeo_estelar_asm();
-
 
 void menu()
 {
@@ -22,10 +22,10 @@ void menu()
     int delays[] = {50, 50, 50, 50, 50};
     while (1)
     {
-        http_return init = readLastMessage("6156973481:AAHXgfu9nLrmqucDXTX3GXREczhjTqFVY64", 0);
+        http_return init = readLastMessage(BOT_TOKEN, 0);
         uint8_t output = 0x00;
         // outportb (output);
-        sendMessage("6156973481:AAHXgfu9nLrmqucDXTX3GXREczhjTqFVY64", "6022803879", MENU);
+        sendMessage(BOT_TOKEN, CHAT_ID, MENU);
 
         printw("---Menu---\n");
         printw("1) Auto Fantastico\n");
@@ -39,14 +39,14 @@ void menu()
         printw("6) Exit\n\n");
         attroff(COLOR_PAIR(2));
 
-        printw("Seleccione una opción: ");
+        printw("Esperando Comando en Telegram...");
         refresh();
 
         http_return telegram_option;
         int offset = init.update_id + 1;
         do
         {
-            telegram_option = readLastMessage("6156973481:AAHXgfu9nLrmqucDXTX3GXREczhjTqFVY64", offset);
+            telegram_option = readLastMessage(BOT_TOKEN, offset);
             if (telegram_option.update_id != 0)
             {
                 offset = telegram_option.update_id + 1;
@@ -85,11 +85,11 @@ void menu()
             //                break;
         case 6:
             printw("\nExit\n");
-            sendMessage("6156973481:AAHXgfu9nLrmqucDXTX3GXREczhjTqFVY64", "6022803879", "Exit");
+            sendMessage(BOT_TOKEN, CHAT_ID, "Exit");
             return;
         default:
             printw("\nOpción inválida\n");
-            sendMessage("6156973481:AAHXgfu9nLrmqucDXTX3GXREczhjTqFVY64", "6022803879", "Opción inválida");
+            sendMessage(BOT_TOKEN, CHAT_ID, "Opción inválida");
             break;
         }
 

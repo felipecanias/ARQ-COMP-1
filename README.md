@@ -10,6 +10,9 @@ Integrantes:
 
 Comando para compilar con la librería ncurses y curl:
 ```bash
+sudo apt install libncurses5-dev
+sudo apt install libcurl4-openssl-dev
+
 gcc main.c http.c include/cJSON.c -o main -lncurses -lcurl
 ```  
 
