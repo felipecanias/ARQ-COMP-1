@@ -2,8 +2,10 @@
 #include <string.h>
 #include "http.h"
 #include "include/bot_credentials.h"
+#include <pthread.h>
 // #include "include/EasyPIO.h"
 int offset = 0;
+int EXIT = 0;
 
 
 // void outportb(int data) {
@@ -22,6 +24,7 @@ int offset = 0;
 // }
 
 void initial_msg(char *name) {
+    EXIT = 0;
     char message[256];
     sprintf(message, "---%s---\n\"up\" o \"down\" para aumentar o disminuir la velocidad\n\"q\" para salir", name);
     sendMessage(BOT_TOKEN, CHAT_ID, message);
@@ -64,6 +67,7 @@ int checkMessage(int *delayValue)
     char *ch = telegram_option.text;
     if (strcmp(ch, "q") == 0)
     {
+        EXIT = 1;
         return 0; // Tecla de salida presionada
     }
     else if (strcmp(ch, "down") == 0)
@@ -90,20 +94,36 @@ int checkMessage(int *delayValue)
     }
 }
 
+void *checkMessageThread(void *delayValue)
+{
+    while (1)
+    {
+        checkMessage((int *)delayValue);
+    }
+    return NULL;
+}
+
+
 int delay(int *d)
 {
-    if (!checkMessage(d))
-        return 0;
+    // if (!checkMessage(d))
+    //     return 0;
     int i;
     int time = *d;
-    time = time * 5000;
+    time = time * 500000;
     for (i = time; i > 0; --i)
-    
+        if(EXIT == 1)
+            return 0;
     return 1;
 }
 
 int auto_fantastico(int *delayValue)
 {
+
+    pthread_t thread;
+    pthread_create(&thread, NULL, checkMessageThread, (void *)delayValue);
+
+
     initial_msg("Auto Fantastico");
 
     unsigned char output;
@@ -128,6 +148,10 @@ int auto_fantastico(int *delayValue)
                 return 1;
         }
     } while (1);
+
+    pthread_join(thread, NULL); // Esperar a que el hilo termine antes de salir de la función
+
+    return 0;
 }
 
 int choque(int *delayValue)

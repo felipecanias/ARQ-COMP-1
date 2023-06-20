@@ -13,7 +13,7 @@ Comando para compilar con la librería ncurses y curl:
 sudo apt install libncurses5-dev
 sudo apt install libcurl4-openssl-dev
 
-gcc main.c http.c include/cJSON.c -o main -lncurses -lcurl
+gcc main.c http.c include/cJSON.c -o main -lncurses -lcurl -lpthread
 ```  
 
 Emular Raspberry
@@ -25,3 +25,6 @@ montar carpeta compartida
 ```bash
 sudo mount -t 9p -o trans=virtio host_share /ruta/guest
 ``` 
+
+const char *BOT_TOKEN = "6156973481:AAHXgfu9nLrmqucDXTX3GXREczhjTqFVY64";
+char *CHAT_ID = "6022803879";
