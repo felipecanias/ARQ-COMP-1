@@ -10,10 +10,18 @@ Integrantes:
 
 Comando para compilar con la librería ncurses y curl:
 ```bash
-sudo apt install libncurses5-dev
-sudo apt install libcurl4-openssl-dev
+Instalar librerias:
 
-gcc main.c http.c include/cJSON.c -o main -lncurses -lcurl -lpthread
+$ sudo apt install libncurses5-dev
+$ sudo apt install libcurl4-openssl-dev
+
+Compilar: 
+$ gcc main.c http.c include/cJSON.c -o output -lncurses -lcurl -lpthread
+o directamente:
+$ make
+
+Ejecutar:
+$ ./output
 ```  
 
 Emular Raspberry
