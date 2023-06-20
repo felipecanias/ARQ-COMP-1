@@ -6,6 +6,7 @@
 // #include "include/EasyPIO.h"
 int offset = 0;
 int EXIT = 0;
+pthread_t thread;
 
 
 // void outportb(int data) {
@@ -22,15 +23,6 @@ int EXIT = 0;
 //     }
 //     refresh();
 // }
-
-void initial_msg(char *name) {
-    EXIT = 0;
-    char message[256];
-    sprintf(message, "---%s---\n\"up\" o \"down\" para aumentar o disminuir la velocidad\n\"q\" para salir", name);
-    sendMessage(BOT_TOKEN, CHAT_ID, message);
-    struct http_return init = readLastMessage(BOT_TOKEN, 0);
-    //offset = init.update_id + 1;
-}
 
 
 void disp_binary(int data, char *name, int *d)
@@ -103,11 +95,18 @@ void *checkMessageThread(void *delayValue)
     return NULL;
 }
 
+void init_secuencia(char *name, int *d) {
+    EXIT = 0;
+    char message[256];
+    sprintf(message, "---%s---\n\"up\" o \"down\" para aumentar o disminuir la velocidad\n\"q\" para salir", name);
+    sendMessage(BOT_TOKEN, CHAT_ID, message);
+    struct http_return init = readLastMessage(BOT_TOKEN, 0);
+    //offset = init.update_id + 1;
+    pthread_create(&thread, NULL, checkMessageThread, (void *)d);
+}
 
 int delay(int *d)
 {
-    // if (!checkMessage(d))
-    //     return 0;
     int i;
     int time = *d;
     time = time * 500000;
@@ -119,12 +118,7 @@ int delay(int *d)
 
 int auto_fantastico(int *delayValue)
 {
-
-    pthread_t thread;
-    pthread_create(&thread, NULL, checkMessageThread, (void *)delayValue);
-
-
-    initial_msg("Auto Fantastico");
+    init_secuencia("Auto Fantastico", delayValue);
 
     unsigned char output;
     char t;
@@ -156,7 +150,7 @@ int auto_fantastico(int *delayValue)
 
 int choque(int *delayValue)
 {
-    initial_msg("Choque");
+    init_secuencia("Choque", delayValue);
 
     uint8_t table[] = {
         0x81, 0x42, 0x24, 0x18,
@@ -175,7 +169,7 @@ int choque(int *delayValue)
 
 int carrera(int *delayValue)
 {
-    initial_msg("La Carrera");
+    init_secuencia("La Carrera", delayValue);
 
     uint8_t table[] = {
         0x01, 0x01, 0x02, 0x02,
@@ -198,7 +192,7 @@ int carrera(int *delayValue)
 
 int otro(int *delayValue)
 {
-    initial_msg("Ella se fue con otro");
+    init_secuencia("Ella se fue con otro", delayValue);
 
     uint8_t table[] = {
         0x00,
@@ -230,7 +224,7 @@ int otro(int *delayValue)
 
 int parpadeo_estelar(int *delayValue)
 {
-    initial_msg("Parpadeo Estelar");
+    init_secuencia("Parpadeo Estelar", delayValue);
 
     unsigned char output;
     char t;
