@@ -3,18 +3,22 @@
 #include "leds.c"
 #include "http.h"
 #include "include/bot_credentials.h"
-// #include "include/EasyPIO.h"
+#include "include/EasyPIO.h"
 
-// extern void otro_asm();
-// extern void parpadeo_estelar_asm();
+extern void otro_asm();
+extern void parpadeo_estelar_asm();
+extern void auto_fantastico_asm();
+extern void choque_asm();
+extern void carrera_asm();
+
 
 void menu()
 {
-    // pioInit();
-    // char led[] = {14, 15, 18, 23, 24, 25, 8, 7};
-    // for (int i=0; i<=7;i++){
-    //     pinMode(led[i],OUTPUT);
-    // }
+    pioInit();
+    char led[] = {14, 15, 18, 23, 24, 25, 8, 7};
+    for (int i=0; i<=7;i++){
+    pinMode(led[i],OUTPUT);
+    }
 
     char *MENU = "---Menu---\n1) Auto Fantastico\n2) El Choque\n3) La Carrera\n4) Parpadeo Estelar\n5) Ella se fue con otro :(\n6) Exit\n\nSeleccione una opción";
 
@@ -62,27 +66,27 @@ void menu()
         {
 
         case 1:
-            auto_fantastico(&delays[0]);
+            //auto_fantastico(&delays[0]);
+            auto_fantastico_asm(&delays[0]);
             break;
 
         case 2:
-            choque(&delays[1]);
+            //choque(&delays[1]);
+            choque_asm(&delays[1]);
             break;
 
         case 3:
-            carrera(&delays[2]);
+            //carrera(&delays[2]);
+            carrera_asm(&delays[2]);
             break;
         case 4:
-            parpadeo_estelar(&delays[3]);
-            // parpadeo_estelar_asm(&delays[3]);
+            //parpadeo_estelar(&delays[3]);
+            parpadeo_estelar_asm(&delays[3]);
             break;
         case 5:
-            otro(&delays[4]);
-            // otro_asm(&delays[4]);
+            //otro(&delays[4]);
+            otro_asm(&delays[4]);
             break;
-            //            case 6:
-            //                fuegos_artificiales(&delays[5]);
-            //                break;
         case 6:
             printw("\nExit\n");
             sendMessage(BOT_TOKEN, CHAT_ID, "Exit");

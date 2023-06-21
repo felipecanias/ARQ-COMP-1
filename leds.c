@@ -3,26 +3,26 @@
 #include "http.h"
 #include "include/bot_credentials.h"
 #include <pthread.h>
-// #include "include/EasyPIO.h"
+#include "include/EasyPIO.h"
+
 int offset = 0;
 int EXIT = 0;
 pthread_t thread;
 
-
-// void outportb(int data) {
-//     clear();
-//     char led[] = {14, 15, 18, 23, 24, 25, 8,7};
-//     int i =0;
-//     for (int mask = 128; mask > 0; mask = mask / 2) {
-//         if (data & mask) {
-//             digitalWrite(led[i], 1);
-//         } else {
-//             digitalWrite(led[i], 0);
-//         }
-//         i++;
-//     }
-//     refresh();
-// }
+void outportb(int data) {
+   clear();
+   char led[] = {14, 15, 18, 23, 24, 25, 8,7};
+   int i =0;
+   for (int mask = 128; mask > 0; mask = mask / 2) {
+        if (data & mask) {
+            digitalWrite(led[i], 1);
+        } else {
+            digitalWrite(led[i], 0);
+        }
+        i++;
+        }
+        refresh();
+}
 
 
 void disp_binary(int data, char *name, int *d)
@@ -62,7 +62,7 @@ int checkMessage(int *delayValue)
         EXIT = 1;
         return 0; // Tecla de salida presionada
     }
-    else if (strcmp(ch, "down") == 0)
+    else if (strcmp(ch, "down") == 0 || strcmp(ch, "Down") == 0)
     {
         *delayValue += 10; // Aumentar el retardo
         if (*delayValue >= 100)
@@ -71,7 +71,7 @@ int checkMessage(int *delayValue)
         }
         return 1; // No se ha presionado la tecla de salida
     }
-    else if (strcmp(ch, "up") == 0)
+    else if (strcmp(ch, "up") == 0 || strcmp(ch, "Up") == 0)
     {
         *delayValue -= 10; // Reducir el retardo
         if (*delayValue <= 0)
@@ -82,6 +82,15 @@ int checkMessage(int *delayValue)
     }
     else
     {
+        // Verificar si es un comando de delay con un número válido
+        char command[10];
+        int number;
+        int result = sscanf(ch, "%s %d", command, &number);
+        if (result == 2 && (strcmp(command, "delay") == 0 || strcmp(command, "Delay") == 0) && number >= 1 && number <= 100)
+        {
+            *delayValue = number;
+        }
+
         return 1; // No se ha presionado la tecla de salida
     }
 }
