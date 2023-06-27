@@ -20,15 +20,14 @@ void menu()
     pinMode(led[i],OUTPUT);
     }
 
-    char *MENU = "---Menu---\n1) Auto Fantastico\n2) El Choque\n3) La Carrera\n4) Parpadeo Estelar\n5) Ella se fue con otro :(\n6) Exit\n\nSeleccione una opción";
+    char *MENU = "---Menu---\n/1) Auto Fantastico\n/2) El Choque\n/3) La Carrera\n/4) Parpadeo Estelar\n/5) Ella se fue con otro :(\n/6) Exit\n\nSeleccione una opción";
 
-    int opcion;
     int delays[] = {50, 50, 50, 50, 50};
     while (1)
     {
         http_return init = readLastMessage(BOT_TOKEN, 0);
         uint8_t output = 0x00;
-        // outportb (output);
+        outportb (output);
         sendMessage(BOT_TOKEN, CHAT_ID, MENU);
 
         printw("---Menu---\n");
@@ -58,36 +57,37 @@ void menu()
         //     printw("\n\nfin dentro dowhile: \ntext: %s\nupdate_id: %d", telegram_option.text, telegram_option.update_id);
         // refresh();
         } while (strcmp(telegram_option.text, "") == 0);
+        
+        char option = telegram_option.text[1];
 
-        opcion = atoi(telegram_option.text);
         // clear();
 
-        switch (opcion)
+        switch (option)
         {
 
-        case 1:
+        case '1':
             //auto_fantastico(&delays[0]);
             auto_fantastico_asm(&delays[0]);
             break;
 
-        case 2:
+        case '2':
             //choque(&delays[1]);
             choque_asm(&delays[1]);
             break;
 
-        case 3:
+        case '3':
             //carrera(&delays[2]);
             carrera_asm(&delays[2]);
             break;
-        case 4:
+        case '4':
             //parpadeo_estelar(&delays[3]);
             parpadeo_estelar_asm(&delays[3]);
             break;
-        case 5:
+        case '5':
             //otro(&delays[4]);
             otro_asm(&delays[4]);
             break;
-        case 6:
+        case '6':
             printw("\nExit\n");
             sendMessage(BOT_TOKEN, CHAT_ID, "Exit");
             return;

@@ -33,9 +33,8 @@ bool login() {
         //Passwords iguales, login exitoso
         if(login_success) {
             printw("\nBienvenido al Sistema\n");
-            printw("Presione cualquier tecla para continuar\n");
+            printw("Enviando mensaje por telegram...\n");
             refresh();
-            getch();
             clear();
             return 1;
         }

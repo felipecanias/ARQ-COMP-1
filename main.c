@@ -16,7 +16,7 @@ int main() {
     init_pair(1, COLOR_WHITE, COLOR_BLACK);
     attron(COLOR_PAIR(1));
 
-    /*if (login())*/ menu(); //Intentamos el logeo
+    if (login()) menu(); //Intentamos el logeo
 
     endwin(); // Finalizar la biblioteca ncurses
     return 0;

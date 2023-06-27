@@ -28,7 +28,7 @@ void outportb(int data) {
 void disp_binary(int data, char *name, int *d)
 {
     clear();
-    // outportb(data);
+    outportb(data);
     printw("Secuencia: %s\n\n", name);
     init_pair(2, COLOR_RED, COLOR_BLACK);
     for (int mask = 128; mask > 0; mask = mask / 2)
@@ -57,23 +57,23 @@ int checkMessage(int *delayValue)
     }
 
     char *ch = telegram_option.text;
-    if (strcmp(ch, "q") == 0 || strcmp(ch, "Q") == 0)
+    if (strcmp(ch, "/q") == 0 || strcmp(ch, "Q") == 0)
     {
         EXIT = 1;
         return 0; // Tecla de salida presionada
     }
-    else if (strcmp(ch, "down") == 0 || strcmp(ch, "Down") == 0)
+    else if (strcmp(ch, "/down") == 0 || strcmp(ch, "Down") == 0)
     {
-        *delayValue += 10; // Aumentar el retardo
+        *delayValue += 5; // Aumentar el retardo
         if (*delayValue >= 100)
         {
             *delayValue = 100;
         }
         return 1; // No se ha presionado la tecla de salida
     }
-    else if (strcmp(ch, "up") == 0 || strcmp(ch, "Up") == 0)
+    else if (strcmp(ch, "/up") == 0 || strcmp(ch, "Up") == 0)
     {
-        *delayValue -= 10; // Reducir el retardo
+        *delayValue -= 5; // Reducir el retardo
         if (*delayValue <= 0)
         {
             *delayValue = 10;
@@ -108,7 +108,7 @@ void *checkMessageThread(void *delayValue)
 void init_secuencia(char *name, int *d) {
     EXIT = 0;
     char message[256];
-    sprintf(message, "---%s---\n\"up\" o \"down\" para aumentar o disminuir la velocidad\n\"q\" para salir", name);
+    sprintf(message, "---%s---\n\"/up\" o \"/down\" para aumentar o disminuir la velocidad\n\"/q\" para salir", name);
     sendMessage(BOT_TOKEN, CHAT_ID, message);
     struct http_return init = readLastMessage(BOT_TOKEN, 0);
     //offset = init.update_id + 1;
